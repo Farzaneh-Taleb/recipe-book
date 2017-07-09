@@ -15,7 +15,9 @@ recipeDummy = new Recipe('Dummy' , 'Dummy' , 'http://ersuk.co.uk/ekmps/shops/exp
   }
 
   onSelected(recipe: Recipe){
-this.recipeSelected.emit(recipe)
+    console.log("cliiiiiik");
+    console.log(recipe);
+this.recipeSelected.emit(recipe);
   }
 
 }
