@@ -20,20 +20,26 @@ export class ShoppingListAddComponent implements OnChanges {
 
 
   onSubmit(ingredient: Ingredient) {
-    if (!this.isAdd) {
+    const  newIngredient =new Ingredient(ingredient.name , ingredient.amount)
+    if (this.isAdd) {
+      this.sls.editItem(this.item , newIngredient) ;
       console.log("isAdddd" , this.isAdd) ;
     } else {
-      this.item = new Ingredient(ingredient.name , ingredient.amount) ;
+      this.item = newIngredient ;
       console.log("item:" , this.item) ;
       this.sls.addItem(this.item) ;
     }
   }
 
   ngOnChanges(changes) {
-    if(changes.item.currentValue === null){
-      this.isAdd = true ;
+    console.log("changess"  , changes.item)
+    if(changes.item.currentValue == null){
+      this.isAdd = false ;
+      this.item = {name : null , amount: null} ;
+      console.log("changee:" , this.isAdd)
     } else {
-      this.isAdd = false
+      this.isAdd = true;
+      console.log("changee:" , this.isAdd)
     }
   }
 }

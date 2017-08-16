@@ -20,4 +20,8 @@ export class ShoppingListService {
     console.log("this.items" , this.items) ;
   }
 
+  editItem(oldItem: Ingredient , newItem: Ingredient) {
+this.items[this.items.indexOf(oldItem)] = newItem ;
+  }
+
 }
