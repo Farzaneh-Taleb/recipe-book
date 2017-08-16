@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Ingredient} from "../shared/ingredient";
 import {ShoppingListService} from "./shopping-list.service";
+import {tryCatch} from "rxjs/util/tryCatch";
 
 @Component({
   selector: 'rb-shopping-list-add',
@@ -9,6 +10,7 @@ import {ShoppingListService} from "./shopping-list.service";
 export class ShoppingListAddComponent implements OnChanges {
 
   @Input() item: Ingredient ;
+  @Output() cleared = new EventEmitter();
   isAdd = true ;
 
 
@@ -21,8 +23,9 @@ export class ShoppingListAddComponent implements OnChanges {
 
   onSubmit(ingredient: Ingredient) {
     const  newIngredient =new Ingredient(ingredient.name , ingredient.amount)
-    if (this.isAdd) {
+    if (!this.isAdd) {
       this.sls.editItem(this.item , newIngredient) ;
+      this.onClear();
       console.log("isAdddd" , this.isAdd) ;
     } else {
       this.item = newIngredient ;
@@ -33,13 +36,23 @@ export class ShoppingListAddComponent implements OnChanges {
 
   ngOnChanges(changes) {
     console.log("changess"  , changes.item)
-    if(changes.item.currentValue == null){
-      this.isAdd = false ;
+    if(changes.item.currentValue === null){
+      this.isAdd = true ;
       this.item = {name : null , amount: null} ;
       console.log("changee:" , this.isAdd)
     } else {
-      this.isAdd = true;
+      this.isAdd = false;
       console.log("changee:" , this.isAdd)
     }
+  }
+
+  onDelete(){
+    this.sls.deleteItem(this.item) ;
+    this.onClear();
+  }
+
+  onClear() {
+    this.isAdd = true ;
+    this.cleared.emit(null) ;
   }
 }
