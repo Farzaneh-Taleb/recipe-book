@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {RecipeService} from "../recipe.service";
-import {Subscription} from "rxjs/Subscription";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {RecipeService} from '../recipe.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-recipe-edit',
+  selector: 'rb-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css']
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit,OnDestroy {
   private recipeIndex: number ;
   private subscription: Subscription
 
@@ -18,14 +18,13 @@ export class RecipeEditComponent implements OnInit {
     let isNew = true ;
     this.subscription = this.route.params.subscribe(
       (params: any) => {
-        if(params.hasOwnProperty('id')){
+        if (params.hasOwnProperty('id')){
           isNew = false;
           this.recipeIndex = +params['id'] ;
-        }
-        else {
+        } else {
           isNew = true ;
         }
-        console.log("isNew: ",isNew);
+        console.log('isNew: ' , isNew);
       }
     );
   }
