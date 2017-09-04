@@ -17,7 +17,7 @@ export class ShoppingListService {
 
   addItem(item: Ingredient) {
     this.items.push(item) ;
-    console.log("this.items" , this.items) ;
+    console.log('this.items' , this.items) ;
   }
 
   editItem(oldItem: Ingredient , newItem: Ingredient) {
